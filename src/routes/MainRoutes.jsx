@@ -11,6 +11,9 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/index')));
 
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
+const PostPage = Loadable(lazy(() => import('pages/extra-pages/form-page')));
+const TagsPage = Loadable(lazy(() => import('pages/extra-pages/tags-page')));
+const FullDetailPage = Loadable(lazy(() => import('pages/extra-pages/fulldetail-page')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -20,12 +23,12 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <DashboardDefault />
+      element: <SamplePage />
     },
-    {
-      path: 'color',
-      element: <Color />
-    },
+    // {
+    //   path: 'color',
+    //   element: <Color />
+    // },
     {
       path: 'dashboard',
       children: [
@@ -38,6 +41,18 @@ const MainRoutes = {
     {
       path: 'sample-page',
       element: <SamplePage />
+    },
+    {
+      path: 'post-page',
+      element: <PostPage />
+    },
+    {
+      path: 'tags-page',
+      element: <TagsPage />
+    },
+    {
+      path: 'fulldetail-page',
+      element: <FullDetailPage />
     },
     {
       path: 'shadow',
