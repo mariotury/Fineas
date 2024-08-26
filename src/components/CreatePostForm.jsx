@@ -27,7 +27,6 @@ const CreatePostForm = () => {
 
 
   const handleSubmit = (values, { setSubmitting }) => {
-    // Handle form submission here
     console.log(values);
     setSubmitting(false);
   
@@ -73,7 +72,7 @@ const CreatePostForm = () => {
        fullWidth
        multiple
        freeSolo
-       options={['Java', 'C#', 'Asycuda']} // Replace with your actual list of tags
+       options={['Java', 'C#', 'Asycuda']} 
        renderInput={(params) => (
         
          <TextField
@@ -133,7 +132,7 @@ const CreatePostForm = () => {
                     {...field}
                    
                     multiline
-                    rows={10}  // Increased from 6 to 10
+                    rows={10}  
                     fullWidth
                     margin="normal"
                   />
