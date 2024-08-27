@@ -15,6 +15,16 @@ import {
 } from '@mui/material';
 import { AttachFile } from '@mui/icons-material';
 import MainCard from 'components/MainCard';
+import * as Yup from 'yup';
+
+const SignupSchema = Yup.object().shape({
+
+  title: Yup.string().required('Required'),
+  tags: Yup.array().min(1, 'Required'),
+  body: Yup.string().required('Required'),
+  file: Yup.mixed().required('File is required')
+
+});
 
 const CreatePostForm = () => {
   const initialValues = {
@@ -35,8 +45,8 @@ const CreatePostForm = () => {
 
   return (
     <MainCard title="Create new post">
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ values }) => (
+      <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={SignupSchema}>
+        {({ values, errors, touched }) => (
           <Form>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -44,6 +54,7 @@ const CreatePostForm = () => {
                   Title
                 </Typography>
                 <Field name="title">
+                
                   {({ field }) => (
                     <>
                       <InputLabel htmlFor="title">Be specific and straight to the point.</InputLabel>
@@ -51,9 +62,14 @@ const CreatePostForm = () => {
                         id="title"
                         fullWidth
                         placeholder="Enter a title"
-                        {...field}
+                        {...field} 
+                        error={touched.title && Boolean(errors.title)}
+                        
                       />
-                      <FormHelperText>{`${field.value.length}/130 characters`}</FormHelperText>
+                        {touched.title && errors.title && (
+        <FormHelperText error>{errors.title}</FormHelperText>
+      )}
+                      <FormHelperText sx={{ textAlign: 'right' }}>{`${field.value.length}/130 characters`}</FormHelperText>
                     </>
                   )}
                 </Field>
@@ -66,6 +82,7 @@ const CreatePostForm = () => {
                 <Field name="tags">
                 
                 {({ field, form }) => (
+                     
        <Autocomplete
        {...field}
        id="tags"
@@ -78,7 +95,11 @@ const CreatePostForm = () => {
          <TextField
            {...params}
            placeholder="Enter tag"
-         />
+           error={touched.tags && Boolean(errors.tags)}
+           helperText={touched.tags && errors.tags}
+         /> 
+         
+        
        )}
        onChange={(_, value, reason) => {
          if (reason === 'selectOption') {
@@ -134,24 +155,28 @@ const CreatePostForm = () => {
                     multiline
                     rows={10}  
                     fullWidth
-                    margin="normal"
+                    margin="normal" 
+                    error={touched.body && Boolean(errors.body)}
+           helperText={touched.body && errors.body}
                   />
                    <Field name="file">
-            {({ field, form }) => (
+            {({ field, form, meta }) => (
               <Box sx={{ display: 'flex', alignItems: 'center', position: 'absolute', bottom: 8, right: 8 }}>
                 {fileName && <Typography variant="body2" sx={{ mr: 1 }}>{fileName}</Typography>}
                 <Button
                   component="label"
                   startIcon={<AttachFile />}
+                  endIcon={meta.touched && meta.error ? <span style={{ color: 'red', marginLeft: -8 }}>*</span> : null}
+        color={meta.touched && meta.error ? "error" : "primary"}
                 >
                   Upload File
                   <input
                     type="file"
                     onChange={(event) => {
                       const file = event.currentTarget.files[0];
-                      form.setFieldValue(field.name, file);
-                      setFileName(file ? file.name : '');
-                    }}
+                      form.setFieldValue(field.name, file); 
+                      setFileName(file ? file.name : ''); 
+                    }} 
                     hidden
                   />
                 </Button>
