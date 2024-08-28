@@ -19,7 +19,8 @@ const support = {
       title: 'Feed',
       type: 'item',
       url: '/feed-page',
-      icon: icons.ChromeOutlined
+      icon: icons.ChromeOutlined,
+      breadcrumbs: false
     },
     // {
     //   id: 'post-page',
@@ -33,7 +34,8 @@ const support = {
       title: 'Tags',
       type: 'item',
       url: '/tags-page',
-      icon: icons.ChromeOutlined
+      icon: icons.ChromeOutlined,
+      breadcrumbs: false
     },
     // {
     //   id: 'fulldetail-page',
