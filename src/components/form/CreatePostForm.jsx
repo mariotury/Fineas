@@ -26,7 +26,7 @@ const SignupSchema = Yup.object().shape({
 
 });
 
-const CreatePostForm = () => {
+const CreatePostForm = ({onSubmit}) => {
   const initialValues = {
     title: '',
     tags: [],
@@ -39,14 +39,14 @@ const CreatePostForm = () => {
   const handleSubmit = (values, { setSubmitting }) => {
     console.log(values);
     setSubmitting(false);
-  
+    onSubmit(values);
   };
 
 
   return (
     <MainCard title="Create new post">
       <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={SignupSchema}>
-        {({ values, errors, touched }) => (
+        {({ values, errors, touched, setFieldValue }) => (
           <Form>
             <Grid container spacing={3}>
               <Grid item xs={12}>

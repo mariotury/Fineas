@@ -15,19 +15,19 @@ const support = {
   type: 'group',
   children: [
     {
-      id: 'sample-page',
-      title: 'Home',
+      id: 'feed-page',
+      title: 'Feed',
       type: 'item',
-      url: '/sample-page',
+      url: '/feed-page',
       icon: icons.ChromeOutlined
     },
-    {
-      id: 'post-page',
-      title: 'Post Page',
-      type: 'item',
-      url: '/post-page',
-      icon: icons.ChromeOutlined
-    },
+    // {
+    //   id: 'post-page',
+    //   title: 'Post Page',
+    //   type: 'item',
+    //   url: '/post-page',
+    //   icon: icons.ChromeOutlined
+    // },
     {
       id: 'tags-page',
       title: 'Tags',
@@ -35,13 +35,20 @@ const support = {
       url: '/tags-page',
       icon: icons.ChromeOutlined
     },
-    {
-      id: 'fulldetail-page',
-      title: 'Details Page',
-      type: 'item',
-      url: '/fulldetail-page',
-      icon: icons.ChromeOutlined
-    },
+    // {
+    //   id: 'fulldetail-page',
+    //   title: 'Details Page',
+    //   type: 'item',
+    //   url: '/fulldetail-page',
+    //   icon: icons.ChromeOutlined
+    // }, 
+    // {
+    //   id: 'posts-list-page',
+    //   title: 'PostList Page',
+    //   type: 'item',
+    //   url: '/posts-list-page',
+    //   icon: icons.ChromeOutlined
+    // },
     // {
     //   id: 'documentation',
     //   title: 'Documentation',
