@@ -1,97 +1,166 @@
-import React, { useState, useEffect} from 'react';
-import { Typography, Button, Card, CardContent, Box, Grid, Pagination, Chip } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
-import MainCard from 'components/MainCard';
-import UserInfo from 'components/user/UserInfo';
+import React, { useState } from 'react';
+import { Box, Paper, IconButton, Stack, TextField, InputAdornment, Typography, Chip, Divider, Button } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'; 
-import PostsList from 'components/posts/PostsList';
-
-// const PostSummary = ({ id, content, author, votes, date, tags, title }) => {
-//   const navigate = useNavigate();
-//   const summaryContent = content.length > 100 ? content.substring(0, 100) + '...' : content;
-
-//   const handleClick = () => {
-//     // navigate(`/post/${id}`); 
-
-   
-//     navigate('/detail-page');
-    
-//   }; 
-
-//   const handleUserInfoClick = (e) => {
-//     e.stopPropagation();
-//   };
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ShareIcon from '@mui/icons-material/Share';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from 'react-router-dom';
 
 
-//   return (
-//     <Card sx={{ mb: 2, cursor: 'pointer' }} onClick={handleClick}>
-//       <CardContent>
-//         <Typography variant="h6" gutterBottom>{title}</Typography>
-//         <Typography variant="body1" component="div" sx={{ mb: 2 }}>
-//           {summaryContent}
-//         </Typography>
-//         <Box display="flex" justifyContent="space-between" alignItems="center">
-//           <Box>
-//             {tags && tags.map((tag, index) => (
-//               <Chip key={index} label={tag} size="small" sx={{ mr: 0.5, mb: 0.5 }} />
-//             ))}
-//           </Box>
-//         </Box> 
-//         <Box className="user-info" onClick={handleUserInfoClick}>
-//           <UserInfo name={author} initialVotes={votes} date={date} />
-//         </Box>
-//       </CardContent>
-//     </Card>
-//   );
-// };
+const Post = ({ title, date, description, tags, username }) => {
+  const [upvotes, setUpvotes] = useState(2);
+  const [downvotes, setDownvotes] = useState(1);
 
-const Feed = () => {
-  const location = useLocation();
+  const handleUpvote = () => {
+    setUpvotes(prev => prev + 1);
+  };
+
+  const handleDownvote = () => {
+    setDownvotes(prev => prev + 1);
+  };
+
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
-  const [posts, setPosts] = useState([
-    { id: 1, title: "Android Firebase Sign In", content: "There are mainly two categories of Android applications. 1. System Apps: installed when system is initialized 2. User Apps: installed from Play store, using ADB or copying .apk file.......", author: "John Micheal", votes: 5, date: "15/07/2024", tags: ["Android", "Firebase"] },
-    { id: 2, title: "React Hooks Overview", content: "There are mainly two categories of Android applications. 1. System Apps: installed when system is initialized 2. User Apps: installed from Play store, using ADB or copying .apk file in SD card............", author: "Jane Sandy", votes: 20, date: "13/07/2024", tags: ["React", "JavaScript"] },
-    { id: 3, title: "Python Data Structures", content: "There are mainly two categories of Android applications. 1. System Apps: installed when system is initialized 2. User Apps: installed from Play store, using ADB or copying .apk file in SD...........", author: "Jacob Tom", votes: 19, date: "10/07/2024", tags: ["Python", "Data Structures"] },
-    { id: 4, title: "React Hooks Overview",  content: "React hooks provide a more direct API to the React concepts you already know. They allow you to reuse stateful logic without changing your component hierarchy...", author: "Emily Chen", votes: 25, date: "18/07/2024", tags: ["React", "JavaScript"]  },
-  { id: 5, title: "React Hooks Overview",  content: "Docker containers are lightweight, standalone, executable packages of software that include everything needed to run an application: code, runtime, system tools, system libraries and settings...", author: "Alex Johnson", votes: 15, date: "20/07/2024", tags: ["React", "JavaScript"]  },
-  { id: 6,  title: "React Hooks Overview",  content: "GraphQL is a query language for APIs and a runtime for executing those queries with your existing data. It provides a complete and understandable description of the data in your API...", author: "Sophia Lee", votes: 30, date: "22/07/2024", tags: ["React", "JavaScript"]  },
-  { id: 7, title: "React Hooks Overview",  content: "Kubernetes, also known as K8s, is an open-source system for automating deployment, scaling, and management of containerized applications. It groups containers that make up an application into logical units for easy management and discovery...", author: "Michael Brown", votes: 22, date: "24/07/2024", tags: ["React", "JavaScript"]  },
-  { id: 8, title: "React Hooks Overview",  content: "TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. It offers optional static typing, classes, and interfaces. One of the big benefits is to enable IDEs to provide a richer environment for spotting common errors as you type the code...", author: "Sarah Davis", votes: 18, date: "26/07/2024", tags: ["React", "JavaScript"]  },
-  { id: 9, title: "React Hooks Overview",  content: "Machine Learning is a subset of artificial intelligence that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. It focuses on the development of computer programs that can access data and use it to learn for themselves...", author: "David Wilson", votes: 35, date: "28/07/2024", tags: ["React", "JavaScript"]  },
-  { id: 10,  title: "React Hooks Overview",  content: "RESTful APIs are based on Representational State Transfer (REST) architecture. When a client request is made via a RESTful API, it transfers a representation of the state of the resource to the requester or endpoint...", author: "Emma Taylor", votes: 28, date: "30/07/2024", tags: ["React", "JavaScript"]  },
-]);
-  
+  const handleClick = () => {
+    navigate('/detail-page');
+  };
 
-  useEffect(() => {
-    if (location.state && location.state.newPost) {
-      setPosts(prevPosts => [location.state.newPost, ...prevPosts]);
-      window.history.replaceState({}, document.title);
+  return (
+    <Paper sx={{ padding: 2, paddingBottom: 1, backgroundColor: '#fff', boxShadow: 'none' }}>
+      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+        <Box>
+          <Stack direction="row" alignItems="center">
+            <Typography variant="h6">{title}</Typography>
+            <Typography variant="caption" sx={{ marginLeft: 2 }}>{date}</Typography>
+          </Stack>
+          <Typography variant="body2" sx={{ marginTop: 1 }}>
+            {description}
+          </Typography>
+        </Box>
+        <Typography variant="caption">{username}</Typography>
+      </Stack>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ marginTop: 1 }}>
+        <Box>
+          {tags.map((tag, index) => (
+            <Chip
+              key={index}
+              label={tag}
+              size="small"
+              sx={{ marginRight: 1, backgroundColor: '#ece6f0' }}
+            />
+          ))}
+        </Box>
+        <Stack direction="row" alignItems="center">
+          <IconButton onClick={handleUpvote} sx={{ fontSize: '18px' }}>
+            <ArrowUpwardIcon sx={{ fontSize: '18px' }} />
+          </IconButton>
+          <Typography variant="body2">{upvotes}</Typography>
+          <IconButton onClick={handleDownvote} sx={{ fontSize: '18px' }}>
+            <ArrowDownwardIcon sx={{ fontSize: '18px' }} />
+          </IconButton>
+          <Typography variant="body2">{downvotes}</Typography>
+          <IconButton sx={{ fontSize: '18px' }}>
+            <ChatBubbleOutlineIcon onClick={handleClick} sx={{ fontSize: '18px' }} />
+          </IconButton>
+          <IconButton sx={{ fontSize: '18px' }}>
+            <ShareIcon sx={{ fontSize: '18px' }} />
+          </IconButton>
+          <IconButton sx={{ fontSize: '18px' }}>
+            <BookmarkBorderIcon sx={{ fontSize: '18px' }} />
+          </IconButton>
+        </Stack>
+      </Stack>
+    </Paper>
+  );
+};
+
+const SamplePage = () => {
+  const posts = [
+    {
+      title: 'How to install asycuda',
+      date: '23 Aug 2024',
+      description: 'A detailed guide on installing ASYCUDA software on your system.',
+      tags: ['java', 'customs', 'asycuda', 'install'],
+      username: 'username1',
+    },
+    {
+      title: 'Understanding React Hooks',
+      date: '20 Aug 2024',
+      description: 'An introduction to React Hooks, including useState and useEffect.',
+      tags: ['react', 'javascript', 'hooks'],
+      username: 'username2',
+    },
+    {
+      title: 'Setting up a REST API',
+      date: '18 Aug 2024',
+      description: 'Learn how to set up a REST API using Express and Node.js.',
+      tags: ['api', 'rest', 'backend', 'express'],
+      username: 'username3',
     }
-  }, [location]);
+  ];
 
-
-  
-
+  const navigate = useNavigate();
   const handleCreatePost = () => {
     navigate('/post-page');
   };
 
 
   return (
-    <MainCard>
-      <Box sx={{ width: '100%', overflow: 'hidden' }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4">Posts</Typography>
-        <Button variant="contained" color="primary" onClick={handleCreatePost}>
-          + Create Post
+    <Box sx={{ padding: 2, backgroundColor: '#fff', minHeight: '100vh' }}>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ marginBottom: 2, position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#fff' }}>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <TextField
+            placeholder="Hinted search text"
+            variant="outlined"
+            size="small"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+              sx: { borderRadius: '20px' },
+            }}
+            sx={{ width: '300px' }}
+          />
+          <IconButton sx={{ padding: '8px', backgroundColor: '#E0E0E0', borderRadius: '50%' }}>
+            <FilterAltIcon sx={{ fontSize: '18px' }} />
+          </IconButton>
+        </Stack>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          sx={{
+            position: 'sticky',
+            top: 16,
+            right: 16,
+            backgroundColor: '#1976d2',
+            color: '#ffffff',
+            '&:hover': {
+              backgroundColor: '#1565c0',
+            },
+            boxShadow: 'none',
+            borderRadius: '5px',
+          }}
+          onClick={handleCreatePost}
+        >
+          Add Post
         </Button>
+      </Stack>
+      <Box sx={{ maxHeight: 'calc(100vh - 80px)', overflowY: 'auto' }}>
+        {posts.map((post, index) => (
+          <React.Fragment key={index}>
+            <Post {...post} />
+            {index < posts.length - 1 && <Divider sx={{ marginY: 0.5, borderColor: '#e0e0e0' }} />}
+          </React.Fragment>
+        ))}
       </Box>
-      <PostsList posts={posts} />
     </Box>
-    </MainCard>
   );
 };
 
-export default Feed;
+export default SamplePage;
